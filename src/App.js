@@ -1,21 +1,60 @@
+import StyledButton from './components/StyledButton';
 import logo from './logo.svg';
-// import './App.css';
-// import "./App.scss";
-import styles from './App.module.css';
+import './App.css';
+import styled, { createGlobalStyle } from 'styled-components';
+import StyledA from './components/StyledA';
 
-import Button from './components/Button';
 
+const PrimaryStyledButton = styled(StyledButton)`
+  background : white;
+  color : palevioletred;
+`;
+
+const UppercaseButton = props => <button {...props} children={props.children.toUpperCase()} />;
+
+const MyButton = props => <button className={props.className} children={`MyButton ${props.children}`} />;
+
+const StyledMyButton = styled(MyButton)`
+  background : transparent;
+  border-radius : 3px;
+  border : 2px solid ${props => props.color || `palevioletred`};
+  color : ${props => props.color || `palevioletred`};
+  margin : 0 1em;
+  padding : 0.25em 1em;
+  font-size : 20px;
+
+  :hover {
+    border : 2px solid white;
+  }
+
+  ::before {
+    content : "@";
+  }
+`;
+
+const GlobalStyle = createGlobalStyle`
+  button {
+    color : yellow;
+  }
+`;
 
 
 function App() {
   return (
-    <div className={styles["App"]}>
-      <header className={styles["header"]}>
-        <img src={logo} className={styles["logo"]} alt="logo" />
+    <div className="App">
+      <GlobalStyle />
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <StyledButton>버튼</StyledButton>
+          <StyledButton primary>버튼</StyledButton>
+          <PrimaryStyledButton>버튼</PrimaryStyledButton>
+          <StyledButton as="a" href="/">버튼</StyledButton>
+          <StyledButton as={UppercaseButton}>Button</StyledButton>
+          <StyledMyButton>button</StyledMyButton>
+          <StyledMyButton color ="green">button</StyledMyButton>
+          <StyledA href='https://naver.com'>Tag</StyledA>
         </p>
-        <Button>Button</Button>
       </header>
     </div>
   );
